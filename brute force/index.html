@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Security Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="floor">
+  <div class="console" role="application" aria-label="Password Security Console">
+
+    <header class="console-header">
+      <div class="header-eyebrow">ACCESS PANEL DIAGNOSTIC &mdash; UNIT 04</div>
+      <h1 class="header-title">Password Security Console</h1>
+      <p class="header-sub">Educational strength check. No password is guessed, cracked, or transmitted &mdash; everything runs locally in your browser.</p>
+    </header>
+
+    <div class="console-body">
+
+      <!-- LEFT: password entry device -->
+      <section class="device" aria-label="Password entry panel">
+
+        <div class="lcd" id="lcd">
+          <div class="lcd-row">
+            <span class="lcd-label">ENTER PASSWORD</span>
+            <button type="button" class="lcd-toggle" id="visibilityToggle" aria-pressed="false">SHOW</button>
+          </div>
+          <label class="mode-label" for="modeSelect">Mode</label>
+          <select id="modeSelect" class="mode-select" aria-describedby="passwordHelp">
+            <option value="custom">Custom password</option>
+            <option value="pin4">4-digit checker</option>
+            <option value="pin6">6-digit checker</option>
+            <option value="pin8">8-digit checker</option>
+          </select>
+          <label class="password-field-label" for="passwordInput">Password</label>
+          <div class="password-field-wrap">
+            <input type="password" id="passwordInput" class="password-field" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type or paste a password" aria-describedby="passwordHelp">
+          </div>
+          <div class="password-preview" id="passwordPreview" aria-live="polite"></div>
+          <p class="password-help" id="passwordHelp">Use any mix of letters, numbers, symbols, spaces, or Unicode characters.</p>
+          <div class="lcd-status" id="lcdStatus">STANDBY</div>
+        </div>
+
+        <button type="button" class="analyze-btn" id="analyzeBtn">
+          <span class="analyze-btn-icon">&#9679;</span> <span id="analyzeBtnText">ANALYZE PASSWORD</span>
+        </button>
+      </section>
+
+      <!-- RIGHT: diagnostic readout panel -->
+      <section class="readout" aria-label="Analysis results">
+
+        <div class="readout-block">
+          <div class="readout-row">
+            <span class="readout-key">STRENGTH</span>
+            <span class="readout-value" id="strengthValue">&mdash;</span>
+          </div>
+          <div class="led-meter" id="ledMeter" aria-hidden="true">
+            <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
+            <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
+          </div>
+          <div class="readout-caption" id="scoreCaption">Score: &mdash; / 100</div>
+        </div>
+
+        <div class="readout-block">
+          <div class="readout-row">
+            <span class="readout-key">SEARCH SPACE</span>
+            <span class="readout-value" id="totalValue">Password search estimate</span>
+          </div>
+          <div class="space-track" aria-hidden="true">
+            <div class="space-fill" id="spaceFill"></div>
+            <div class="space-marker" id="spaceMarker"></div>
+          </div>
+          <div class="readout-caption" id="spaceCaption">Estimated position within a password space: &mdash;</div>
+        </div>
+
+        <div class="readout-block">
+          <div class="readout-row">
+            <span class="readout-key">PATTERN LOG</span>
+          </div>
+          <ul class="pattern-log" id="patternLog">
+            <li class="log-line log-idle">&gt; awaiting input&hellip;</li>
+          </ul>
+        </div>
+
+        <div class="readout-block recommendation-block">
+          <div class="readout-row">
+            <span class="readout-key">RECOMMENDATION</span>
+          </div>
+          <p class="recommendation-text" id="recommendationText">Enter a password and press ANALYZE.</p>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- BOTTOM: educational time-estimate table -->
+    <section class="estimates" aria-label="Educational time estimates">
+      <div class="estimates-header">
+        <span class="estimates-title">TIME TO EXHAUST A 10,000-VALUE REFERENCE SPACE</span>
+        <span class="estimates-badge">reference table &mdash; not a live attack</span>
+      </div>
+      <table class="estimates-table" id="estimatesTable">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Rate</th>
+            <th>Time for all 10,000</th>
+          </tr>
+        </thead>
+        <tbody id="estimatesBody"></tbody>
+      </table>
+      <p class="estimates-note">Figures describe a small reference space in the worst case &mdash; they assume no lockouts, rate limiting, or MFA, all of which real systems should use. Nothing here performs an actual guess.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
